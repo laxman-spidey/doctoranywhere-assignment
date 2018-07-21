@@ -1,11 +1,14 @@
 package co.angel.doctoranywhere.assignment;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import co.angel.doctoranywhere.assignment.models.User;
@@ -17,8 +20,9 @@ public class UserListRecyclerViewAdapter extends RecyclerView.Adapter<UserListRe
 
     private final List<User> mValues;
 
-    public UserListRecyclerViewAdapter(List<User> items) {
+    public UserListRecyclerViewAdapter(List<User> items, Context context) {
         mValues = items;
+        this.context = context;
     }
 
     @Override
@@ -54,9 +58,19 @@ public class UserListRecyclerViewAdapter extends RecyclerView.Adapter<UserListRe
             imagesView = view.findViewById(R.id.images_list_view);
         }
         public void setData(User user) {
+//            Glide.with(getContext())
+//                    .load(user.image)
+//                    .apply(new RequestOptions().centerCrop())
+//                    .into(avatar);
             avatar.setImageURI(user.image);
             name.setText(user.name);
             imagesView.setItems(user.items);
+
         }
+    }
+    private Context context;
+
+    private Context getContext() {
+        return this.context;
     }
 }

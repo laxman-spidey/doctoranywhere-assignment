@@ -43,7 +43,7 @@ public class UserListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.userList);
         progressBar = view.findViewById(R.id.listLoadingProgressBar);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new UserListRecyclerViewAdapter(users);
+        adapter = new UserListRecyclerViewAdapter(users, getContext());
         recyclerView.setAdapter(adapter);
         setupScrollToLoad();
 

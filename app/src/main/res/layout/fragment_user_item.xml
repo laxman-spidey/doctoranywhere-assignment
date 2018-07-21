@@ -2,18 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:paddingTop="8dp"
     android:orientation="horizontal">
+
 
     <com.facebook.drawee.view.SimpleDraweeView
         xmlns:fresco="http://schemas.android.com/apk/res-auto"
         android:id="@+id/avatar"
         android:layout_width="@dimen/circle_image_large"
         android:layout_height="@dimen/circle_image_large"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="17dp"
         fresco:placeholderImage="@drawable/ic_account_circle"
         fresco:placeholderImageScaleType="centerInside"
         android:layout_alignParentLeft="true"
+        fresco:viewAspectRatio="1"
         fresco:roundAsCircle="true" />
 
     <TextView
@@ -22,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:layout_toRightOf="@+id/avatar"
+        android:textStyle="bold"
+        android:textSize="20sp"
         android:textAppearance="?attr/textAppearanceListItem" />
     <co.angel.doctoranywhere.assignment.UserImagesRecyclerView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,7 +35,8 @@
         tools:listitem="@layout/user_image_item"
         android:layout_below="@+id/avatar"
         android:clipToPadding="false"
-        android:padding="@dimen/item_offset"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         >
 
     </co.angel.doctoranywhere.assignment.UserImagesRecyclerView>

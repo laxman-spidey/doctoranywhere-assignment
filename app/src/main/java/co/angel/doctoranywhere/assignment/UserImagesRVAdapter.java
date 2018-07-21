@@ -34,11 +34,7 @@ public class UserImagesRVAdapter extends RecyclerView.Adapter<UserImagesRVAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        if (getSpanSize(position) == 2) {
-            holder.setFullImage(mValues.get(position));
-        } else {
-            holder.setHalfImage(mValues.get(position));
-        }
+        holder.setImageUrl(mValues.get(position));
 
     }
 
@@ -66,24 +62,13 @@ public class UserImagesRVAdapter extends RecyclerView.Adapter<UserImagesRVAdapte
             image = view.findViewById(R.id.image);
         }
 
-        public void setHalfImage(String imageUrl) {
-            int width = context.getResources().getDisplayMetrics().widthPixels;
-            image.setLayoutParams(new RelativeLayout.LayoutParams(width / 2, width / 2));
-            setImageUrl(imageUrl);
-        }
-
-        public void setFullImage(String imageUrl) {
-            int width = context.getResources().getDisplayMetrics().widthPixels;
-            image.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
-            setImageUrl(imageUrl);
-        }
-
         private void setImageUrl(String imageUrl) {
 //            image.setImageURI(imageUrl);
             // with fresco  -- 170 MB
             Glide.with(getContext())
                     .load(imageUrl)
-                    .apply(new RequestOptions().centerCrop())
+                    .apply(new RequestOptions()
+                            .centerCrop().placeholder(R.drawable.ic_image_black_24dp))
                     .into(image);
             //max 140 MB with Glide
         }
