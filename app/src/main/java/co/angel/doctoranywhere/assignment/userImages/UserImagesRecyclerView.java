@@ -1,4 +1,4 @@
-package co.angel.doctoranywhere.assignment;
+package co.angel.doctoranywhere.assignment.userImages;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,11 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import co.angel.doctoranywhere.assignment.R;
+import co.angel.doctoranywhere.assignment.util.ItemOffsetDecoration;
 
 public class UserImagesRecyclerView extends RecyclerView {
 

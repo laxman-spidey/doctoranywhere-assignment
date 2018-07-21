@@ -14,7 +14,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context=".UserListFragment"
+        tools:context=".usersList.UserListFragment"
         tools:listitem="@layout/fragment_user_item" />
     <ProgressBar
         android:id="@+id/listLoadingProgressBar"

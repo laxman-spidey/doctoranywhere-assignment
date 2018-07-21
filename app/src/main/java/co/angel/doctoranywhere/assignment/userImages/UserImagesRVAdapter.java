@@ -1,4 +1,4 @@
-package co.angel.doctoranywhere.assignment;
+package co.angel.doctoranywhere.assignment.userImages;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,13 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
+
+import co.angel.doctoranywhere.assignment.R;
 
 public class UserImagesRVAdapter extends RecyclerView.Adapter<UserImagesRVAdapter.ViewHolder> {
     public final static String TAG = UserImagesRVAdapter.class.getSimpleName();

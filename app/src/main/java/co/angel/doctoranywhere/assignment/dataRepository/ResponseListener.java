@@ -1,4 +1,4 @@
-package co.angel.doctoranywhere.assignment.RESTServices;
+package co.angel.doctoranywhere.assignment.dataRepository;
 
 public interface ResponseListener {
 

@@ -1,4 +1,4 @@
-package co.angel.doctoranywhere.assignment.RESTServices;
+package co.angel.doctoranywhere.assignment.dataRepository.RESTServices;
 
 import android.util.Log;
 
@@ -12,7 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import co.angel.doctoranywhere.assignment.MainActivity;
+import co.angel.doctoranywhere.assignment.dataRepository.Constants;
+import co.angel.doctoranywhere.assignment.dataRepository.ResponseListener;
+import co.angel.doctoranywhere.assignment.dataRepository.UserListRepo;
 import co.angel.doctoranywhere.assignment.models.User;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -21,11 +23,11 @@ import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
 
-public class HerokuService {
+public class UserListRetrofitRepo extends UserListRepo{
 
-    public final static String TAG = HerokuService.class.getSimpleName();
+    public final static String TAG = UserListRetrofitRepo.class.getSimpleName();
 
-    public static void getUsers(int offset, int limit, final ResponseListener listener) {
+    public void getUsers(int offset, int limit, final ResponseListener listener) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.API.DOMAIN)
                 .build();

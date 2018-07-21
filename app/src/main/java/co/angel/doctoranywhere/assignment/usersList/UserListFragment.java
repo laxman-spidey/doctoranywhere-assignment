@@ -1,44 +1,48 @@
-package co.angel.doctoranywhere.assignment;
+package co.angel.doctoranywhere.assignment.usersList;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import co.angel.doctoranywhere.assignment.RESTServices.HerokuService;
-import co.angel.doctoranywhere.assignment.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserListFragment extends Fragment {
+import co.angel.doctoranywhere.assignment.BaseFragment;
+import co.angel.doctoranywhere.assignment.R;
+import co.angel.doctoranywhere.assignment.dataRepository.UserListRepo;
+import co.angel.doctoranywhere.assignment.models.User;
+
+public class UserListFragment extends BaseFragment implements UsersListContract.View {
 
     public final static String TAG = UserListFragment.class.getSimpleName();
 
-
+    private UsersListContract.Presenter mPresenter;
     private List<User> users = new ArrayList<>();
     private UserListRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
     private ProgressBar progressBar;
 
     public UserListFragment() {
+        mPresenter = new UserListPresenter(UserListRepo.getInstance(), this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+
         View view = inflater.inflate(R.layout.fragment_user_list, container, false);
 
+        setSuccessView(view);
+        setInitViewText("Search for your Favorite Songs");
         Context context = view.getContext();
         recyclerView = view.findViewById(R.id.userList);
         progressBar = view.findViewById(R.id.listLoadingProgressBar);
@@ -46,19 +50,8 @@ public class UserListFragment extends Fragment {
         adapter = new UserListRecyclerViewAdapter(users, getContext());
         recyclerView.setAdapter(adapter);
         setupScrollToLoad();
-
-        return view;
-    }
-
-    public void addUsersToList(List<User> list) {
-        users.addAll(list);
-        adapter.notifyDataSetChanged();
-
-    }
-
-    public void resetUsersList(List<User> newList) {
-        users.clear();
-        addUsersToList(newList);
+        mPresenter.loadUserList();
+        return rootView;
     }
 
     private boolean isLoading = false;
@@ -88,19 +81,56 @@ public class UserListFragment extends Fragment {
         });
     }
 
-    private void loadMore() {
+    @Override
+    public void showProgress() {
+        inProgress();
+    }
+
+    @Override
+    public void showError() {
+        onError();
+    }
+
+    @Override
+    public void showNoDataFound() {
+        showNoDataFound();
+    }
+
+    @Override
+    public void showUserList(List<User> userList) {
+        onSuccess();
+        users.addAll(userList);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void moreItemsLoadingStarted() {
         progressBar.setVisibility(View.VISIBLE);
-        Toast.makeText(getContext(), "Loading more", Toast.LENGTH_SHORT).show();
-        HerokuService.getUsers(adapter.getItemCount(), 20, (response) -> {
-            if (response.isOkay) {
-                Toast.makeText(getContext(), "data received", Toast.LENGTH_SHORT).show();
-                addUsersToList((List<User>) response.data);
-            } else {
-                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-            }
-            Log.i(TAG, response.toString());
-            isLoading = false;
-            progressBar.setVisibility(View.GONE);
-        });
+    }
+
+    @Override
+    public void moreItemsLoaded(List<User> userList) {
+        isLoading = false;
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(getContext(), "more users loaded", Toast.LENGTH_SHORT).show();
+        users.addAll(userList);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void noMoreItemsToLoad() {
+        isLoading = false;
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(getContext(), "No more Items to load", Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void loadMore() {
+        mPresenter.loadMoreUsers(adapter.getItemCount());
+    }
+
+    @Override
+    public void setPresenter(UsersListContract.Presenter presenter) {
+        mPresenter = presenter;
     }
 }

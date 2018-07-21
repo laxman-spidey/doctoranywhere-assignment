@@ -1,4 +1,4 @@
-package co.angel.doctoranywhere.assignment;
+package co.angel.doctoranywhere.assignment.util;
 
 import android.content.Context;
 import android.graphics.Rect;
