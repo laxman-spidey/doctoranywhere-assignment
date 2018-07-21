@@ -41,11 +41,8 @@ public class UserListFragment extends Fragment {
 
         Context context = view.getContext();
         recyclerView = view.findViewById(R.id.userList);
-//            if (mColumnCount <= 1) {
+        progressBar = view.findViewById(R.id.listLoadingProgressBar);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//            } else {
-//                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-//            }
         adapter = new UserListRecyclerViewAdapter(users);
         recyclerView.setAdapter(adapter);
         setupScrollToLoad();
@@ -92,6 +89,7 @@ public class UserListFragment extends Fragment {
     }
 
     private void loadMore() {
+        progressBar.setVisibility(View.VISIBLE);
         Toast.makeText(getContext(), "Loading more", Toast.LENGTH_SHORT).show();
         HerokuService.getUsers(adapter.getItemCount(), 20, (response) -> {
             if (response.isOkay) {
@@ -102,6 +100,7 @@ public class UserListFragment extends Fragment {
             }
             Log.i(TAG, response.toString());
             isLoading = false;
+            progressBar.setVisibility(View.GONE);
         });
     }
 }

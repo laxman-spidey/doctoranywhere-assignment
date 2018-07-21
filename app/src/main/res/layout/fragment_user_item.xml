@@ -31,6 +31,8 @@
         android:layout_height="wrap_content"
         tools:listitem="@layout/user_image_item"
         android:layout_below="@+id/avatar"
+        android:clipToPadding="false"
+        android:padding="@dimen/item_offset"
         >
 
     </co.angel.doctoranywhere.assignment.UserImagesRecyclerView>
