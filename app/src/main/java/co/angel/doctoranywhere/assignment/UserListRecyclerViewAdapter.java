@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import co.angel.doctoranywhere.assignment.dummy.DummyContent.DummyItem;
 import co.angel.doctoranywhere.assignment.models.User;
 
 import java.util.List;
@@ -44,6 +43,7 @@ public class UserListRecyclerViewAdapter extends RecyclerView.Adapter<UserListRe
         public final View mView;
         public final SimpleDraweeView avatar;
         public final TextView name;
+        public final UserImagesRecyclerView imagesView;
         public User mItem;
 
         public ViewHolder(View view) {
@@ -51,10 +51,12 @@ public class UserListRecyclerViewAdapter extends RecyclerView.Adapter<UserListRe
             mView = view;
             avatar = view.findViewById(R.id.avatar);
             name = view.findViewById(R.id.name);
+            imagesView = view.findViewById(R.id.images_list_view);
         }
         public void setData(User user) {
             avatar.setImageURI(user.image);
             name.setText(user.name);
+            imagesView.setItems(user.items);
         }
     }
 }

@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Fresco.initialize(this);
         UserListFragment fragment = (UserListFragment) getSupportFragmentManager().findFragmentById(R.id.favoritesListFragment);
-        HerokuService.getUsers(0,50, (response) -> {
+        HerokuService.getUsers(0,20, (response) -> {
             if (response.isOkay) {
                 Toast.makeText(this, "data received", Toast.LENGTH_SHORT).show();
                 List<User> users = (List<User>) response.data;
